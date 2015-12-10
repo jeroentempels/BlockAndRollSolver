@@ -1,16 +1,34 @@
 package solver;
 
 /**
- * Created by jeroen on 9/12/15.
+ * Class representing a moving block on the field.
  */
 public class Block {
 
+    // Index at which this block is located.
     private final Index index;
+
+    // boolean indicating whether this block has a wall on the north side.
     private final boolean up;
+
+    // boolean indicating whether this block has a wall on the east side.
     private final boolean right;
+
+    // boolean indicating whether this block has a wall on the south side.
     private final boolean down;
+
+    // boolean indicating whether this block has a wall on the west side.
     private final boolean left;
 
+    /**
+     * Create a new block.
+     *
+     * @param index The index at which this block is located.
+     * @param up Boolean indicating whether this block has a wall on the north side.
+     * @param right Boolean indicating whether this block has a wall on the east side.
+     * @param down Boolean indicating whether this block has a wall on the south side.
+     * @param left Boolean indicating whether this block has a wall on the west side.
+     */
     public Block(Index index, boolean up, boolean right, boolean down, boolean left) {
         this.index = index;
         this.up = up;
@@ -19,14 +37,30 @@ public class Block {
         this.left = left;
     }
 
-    public Block(Index index, Block b) {
-        this(index, b.up, b.right, b.down, b.left);
+    /**
+     * Create a copy of an old block with a new index.
+     *
+     * @param index The new index at which the new block is located.
+     * @param block The old block describing the walls of the new block.
+     */
+    Block(Index index, Block block) {
+        this(index, block.up, block.right, block.down, block.left);
     }
 
+    /**
+     * @return The index at which this block is located.
+     */
     public Index getIndex() {
         return index;
     }
 
+    /**
+     * Check whether this block has a wall on the side of a given direction.
+     *
+     * @param dir The direction to check.
+     *
+     * @return True is the block has a wall on the side of a given direction.
+     */
     public boolean hasWall(Direction dir) {
         switch (dir) {
             case UP:
@@ -42,6 +76,16 @@ public class Block {
         }
     }
 
+    /**
+     * Check whether this block has a wall on the opposite side of a given direction.
+     *
+     * UP <-> DOWN
+     * LEFT <-> RIGHT
+     *
+     * @param dir The direction to check.
+     *
+     * @return True is the block has a wall on the opposite side of a given direction.
+     */
     public boolean hasWallFrom(Direction dir) {
         switch (dir) {
             case UP:
@@ -55,34 +99,6 @@ public class Block {
             default:
                 throw new IllegalArgumentException();
         }
-    }
-
-    @Override
-    public String toString() {
-        String up = " ";
-        String down = " ";
-        String left = " ";
-        String right = " ";
-
-        if(this.up) {
-            up =  "-";
-        }
-
-        if(this.down) {
-            down = "-";
-        }
-
-        if(this.left) {
-            left = "|";
-        }
-
-        if(this.right) {
-            right = "|";
-        }
-
-        return index + "\n" + " " + up + " \n"
-                + left + "b" + right + "\n"
-                + " " + down + " ";
     }
 
     @Override
