@@ -1,4 +1,4 @@
-package solver;
+package Board;
 
 /**
  * Class representing an index of a 2d-array.

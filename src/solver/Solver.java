@@ -1,5 +1,8 @@
 package solver;
 
+
+import Board.*;
+
 import java.util.*;
 
 public class Solver {

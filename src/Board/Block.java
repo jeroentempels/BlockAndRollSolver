@@ -1,4 +1,4 @@
-package solver;
+package Board;
 
 /**
  * Class representing a moving block on the field.
@@ -46,7 +46,7 @@ public class Block {
      * @param index The new index at which the new block is located.
      * @param block The old block describing the walls of the new block.
      */
-    Block(Index index, Block block) {
+    public Block(Index index, Block block) {
         this(index, block.up, block.right, block.down, block.left);
     }
 

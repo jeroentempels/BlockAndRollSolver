@@ -1,4 +1,4 @@
-package solver;
+package Board;
 
 import java.util.HashMap;
 

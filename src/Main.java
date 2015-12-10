@@ -1,4 +1,6 @@
-package solver;
+import Board.BoardBuilder;
+import Board.Direction;
+import solver.Solver;
 
 public class Main {
 

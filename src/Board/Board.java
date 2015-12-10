@@ -1,4 +1,4 @@
-package solver;
+package Board;
 
 import java.util.*;
 
@@ -8,19 +8,19 @@ public class Board {
     private final boolean[][] field;
     private final Map<Index, Block> blocks;
 
-    public Board(Index bird, boolean[][] field, Map<Index, Block> blocks) {
+    Board(Index bird, boolean[][] field, Map<Index, Block> blocks) {
         this.bird = bird;
         this.field = field;
         this.blocks = blocks;
     }
 
-    Board copyAndMove(Direction direction) {
+    public Board copyAndMove(Direction direction) {
         BoardBuilder builder = new BoardBuilder(field);
         Map<Index, Block> newBlocks =new HashMap<>();
         List<Block> tempBlocks = direction.sort(blocks.values());
         tempBlocks.forEach(block -> moveBlock(block, direction, newBlocks, builder));
         newBlocks.forEach((k,v) -> builder.addMovingBlock(k,v));
-        return builder.getBoard();
+        return builder.toBoard();
     }
 
     private void moveBlock(Block block, Direction direction, Map<Index, Block> map, BoardBuilder builder) {

@@ -1,5 +1,7 @@
 package solver;
 
+import Board.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
