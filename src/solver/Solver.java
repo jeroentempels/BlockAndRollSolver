@@ -13,14 +13,16 @@ public class Solver {
         Set<Set<Block>> cache = new HashSet<>();
 
         while(!states.peek().isFinished(x,y,dir)) {
-            GameState state =  states.poll();
-            Set<Block> c = state.getBoard().getBlocks();
-            c.add(new Block(state.getBoard().getBird(), dummy));
-            if(cache.contains(c)) {
-                continue;
+            for(GameState state : states.poll().getNextStates()) {
+                System.out.println(states.size());
+                Set<Block> c = state.getBoard().getBlocks();
+                c.add(new Block(state.getBoard().getBird(), dummy));
+                if(cache.contains(c)) {
+                    continue;
+                }
+                cache.add(c);
+                states.add(state);
             }
-            cache.add(c);
-            state.getNextStates().forEach(st -> states.add(st));
         }
 
         return getMoves(states.poll());
