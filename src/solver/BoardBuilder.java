@@ -1,38 +1,45 @@
 package solver;
 
-import blocks.Block;
-import blocks.BlockFactory;
-import blocks.Walls;
+import java.util.HashMap;
 
 /**
  * Created by jeroen on 8/12/15.
  */
 public class BoardBuilder {
 
-    private final Block[][] board;
-    private final BlockFactory factory;
+    private Index bird;
+    private final boolean tiles[][];
+    private final HashMap<Index, Block> blocks;
+
 
     public BoardBuilder(boolean[][] tiles) {
-        board = new Block[tiles.length][tiles[0].length];
-        factory = new BlockFactory();
-
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles.length; j++) {
-                if(tiles[i][j]) {
-                    board[i][j] = factory.getEmptyBlock();
-                } else {
-                    board[i][j] = factory.getFullBlock();
-                }
-            }
-        }
+        this.tiles = tiles;
+        blocks = new HashMap<>();
     }
 
-    public void addMovingBlock(int i, int j, boolean bird, boolean up, boolean right, boolean down, boolean left) {
-        board[i][j] = factory.getBlock(bird, up, right, down, left);
+    public void addMovingBlock(int i, int j, boolean up, boolean right, boolean down, boolean left) {
+        Index ind = new Index(i,j);
+        blocks.put(ind, new Block(ind, up, right, down, left));
+    }
+
+    public void addBird(int i, int j) {
+        bird = new Index(i, j);
+    }
+
+    public void addBird(Index i) {
+        bird = i;
+    }
+
+    public Index getBird() {
+        return bird;
+    }
+
+    public void addMovingBlock(Index i, Block block) {
+        blocks.put(i, block);
     }
 
     public Board getBoard() {
-        return new Board(board);
+        return new Board(bird, tiles, blocks);
     }
 
 }

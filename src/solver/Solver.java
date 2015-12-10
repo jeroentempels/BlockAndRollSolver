@@ -1,29 +1,39 @@
 package solver;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 public class Solver {
 
-    public static void solve(Board board, int x, int y, Direction dir) {
-        Set<ReducedState> done = new HashSet<>();
-        GameState state = new GameState(board);
-        Queue<GameState> states = new LinkedList<>();
-        states.add(state);
+    private static final Block dummy = new Block(new Index(-1,-1),true, true, true, true);
 
-        while (!states.peek().isFinished(x, y, dir)) {
-            GameState st = states.poll();
-            ReducedState reducedState = new ReducedState(st.getBoard(), st.getMove());
-            if(done.contains(reducedState)) {
+    public static List<Direction> solve(Board board, int x, int y, Direction dir) {
+
+        Queue<GameState> states = new LinkedList<>();
+        states.add(new GameState(board));
+        Set<Set<Block>> cache = new HashSet<>();
+
+        while(!states.peek().isFinished(x,y,dir)) {
+            GameState state =  states.poll();
+            Set<Block> c = state.getBoard().getBlocks();
+            c.add(new Block(state.getBoard().getBird(), dummy));
+            if(cache.contains(c)) {
                 continue;
             }
-            done.add(reducedState);
-            st.getNextStates().forEach(s -> states.add(s));
+            cache.add(c);
+            state.getNextStates().forEach(st -> states.add(st));
         }
 
-        states.poll().printSequence();
+        return getMoves(states.poll());
+    }
+
+    private static List<Direction> getMoves(GameState state) {
+        List<Direction> directions = new ArrayList<>();
+        while (state.getPrevious() != null) {
+            directions.add(state.getMove());
+            state = state.getPrevious();
+        }
+        Collections.reverse(directions);
+        return directions;
     }
 
 }

@@ -1,6 +1,7 @@
 package solver;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class GameState {
@@ -57,19 +58,8 @@ public class GameState {
         return board.isFinished(x, y, dir);
     }
 
-    public void print() {
-        System.out.println("===================");
-        System.out.println(move);
-        board.print();
-        if(this.previous != null) {
-            previous.print();
-        }
-    }
 
-    public void printSequence() {
-        if(previous != null && previous.move != null) {
-            previous.printSequence();
-        }
-        System.out.println(move);
+    public GameState getPrevious() {
+        return previous;
     }
 }

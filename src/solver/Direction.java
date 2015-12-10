@@ -1,50 +1,61 @@
 package solver;
 
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 public enum Direction {
     UP {
         @Override
-        public int getRow() {
-            return -1;
+        public Index getIndex() {
+            return new Index(-1, 0);
         }
 
         @Override
-        public int getColumn() {
-            return 0;
+        public List<Block> sort(Collection<Block> blocks) {
+            Comparator<Block> comp = (Block b1, Block b2) -> Integer.compare(b1.getIndex().getFirst(), b2.getIndex().getFirst());
+            return sort(blocks, comp);
         }
     }, DOWN {
         @Override
-        public int getRow() {
-            return 1;
+        public Index getIndex() {
+            return new Index(1, 0);
         }
 
         @Override
-        public int getColumn() {
-            return 0;
+        public List<Block> sort(Collection<Block> blocks) {
+            Comparator<Block> comp = (Block b1, Block b2) -> Integer.compare(-b1.getIndex().getFirst(), -b2.getIndex().getFirst());
+            return sort(blocks, comp);
         }
     }, LEFT {
         @Override
-        public int getRow() {
-            return 0;
+        public Index getIndex() {
+            return new Index(0, -1);
         }
 
         @Override
-        public int getColumn() {
-            return -1;
+        public List<Block> sort(Collection<Block> blocks) {
+            Comparator<Block> comp = (Block b1, Block b2) -> Integer.compare(b1.getIndex().getSecond(), b2.getIndex().getSecond());
+            return sort(blocks, comp);
         }
     }, RIGHT {
         @Override
-        public int getRow() {
-            return 0;
+        public Index getIndex() {
+            return new Index(0, 1);
         }
 
         @Override
-        public int getColumn() {
-            return 1;
+        public List<Block> sort(Collection<Block> blocks) {
+            Comparator<Block> comp = (Block b1, Block b2) -> Integer.compare(-b1.getIndex().getSecond(), -b2.getIndex().getSecond());
+            return sort(blocks, comp);
         }
     };
 
-    public abstract int getRow();
+    public abstract Index getIndex();
 
-    public abstract int getColumn();
+    public abstract List<Block> sort(Collection<Block> blocks);
+
+    List<Block> sort(Collection<Block> blocks, Comparator<Block> blockComparator) {
+        return blocks.stream().sorted(blockComparator).collect(Collectors.toList());
+    }
 }

@@ -25,7 +25,6 @@ public class Main {
              [(0,0) (0,1)]
              [(1,0) (1,1)]
 
-             first boolean indicates whether this block contains the bird.
 
              last 4 booleans indicate whether the block has a wall on this position.
 
@@ -34,13 +33,14 @@ public class Main {
              bool3 : block has wall on south side.
              bool4 : block has wall on west side.
          */
-        builder.addMovingBlock(0,2,true,true,false,true,true);
-        builder.addMovingBlock(1,1,false,true, true, true,false);
-        builder.addMovingBlock(2,0,false,true,false, true, false);
-        builder.addMovingBlock(3,0,false,true, true, false,true);
-        builder.addMovingBlock(3,1,false,false,false,true,true);
+        builder.addMovingBlock(0, 2, true, false, true, true);
+        builder.addMovingBlock(1,1,true, true, true, false);
+        builder.addMovingBlock(2,0,true, false, true, false);
+        builder.addMovingBlock(3,0,true, true,false,true);
+        builder.addMovingBlock(3,1,false,false,true,true);
 
-
+        builder.addBird(0, 2);
+        
         /*
             Solve the puzzle and print it.
 
@@ -52,7 +52,8 @@ public class Main {
 
             example: goal = block on 0,0 with bird and open wall on north side => 0,0,Direction.UP
          */
-        Solver.solve(builder.getBoard(), 4, 2, Direction.DOWN);
+
+        Solver.solve(builder.getBoard(), 4, 2, Direction.DOWN).forEach(System.out::println);
 
     }
 

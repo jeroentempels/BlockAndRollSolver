@@ -1,94 +1,94 @@
 package solver;
 
-import blocks.Block;
-import blocks.BlockFactory;
-import blocks.MovingBlock;
-
-import java.util.Arrays;
+import java.util.*;
 
 public class Board {
 
-    private final BlockFactory factory;
-    private final Block[][] field;
+    private final Index bird;
+    private final boolean[][] field;
+    private final Map<Index, Block> blocks;
 
-    public Board(Block[][] field) {
+    public Board(Index bird, boolean[][] field, Map<Index, Block> blocks) {
+        this.bird = bird;
         this.field = field;
-        this.factory = new BlockFactory();
+        this.blocks = blocks;
     }
 
     Board copyAndMove(Direction direction) {
-        Block[][] copy = copyField();
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                moveBlock(i, j, copy, direction);
-            }
-        }
-        return new Board(copy);
+        BoardBuilder builder = new BoardBuilder(field);
+        Map<Index, Block> newBlocks =new HashMap<>();
+        List<Block> tempBlocks = direction.sort(blocks.values());
+        tempBlocks.forEach(block -> moveBlock(block, direction, newBlocks, builder));
+        newBlocks.forEach((k,v) -> builder.addMovingBlock(k,v));
+        return builder.getBoard();
     }
 
-    private void moveBlock(int i, int j, Block[][] field, Direction direction) {
-        int x = i + direction.getRow();
-        int y = j + direction.getColumn();
-
-        if (!field[i][j].canMove() || x < 0 || x >= field.length || y < 0 || y >= field[0].length) {
-            return;
+    private void moveBlock(Block block, Direction direction, Map<Index, Block> map, BoardBuilder builder) {
+        boolean flag = false;
+        if(bird.equals(block.getIndex())) {
+            if( !block.hasWall(direction)) {
+                moveBird(direction, map, builder);
+            } else {
+                flag = true;
+            }
         }
-        Block next = field[x][y];
 
-        if (next.canBeMovedTo()) {
-            swap(i, j, x, y, field);
-            moveBlock(x, y, field, direction);
-        } else if (next.canMove()) {
-            if (field[i][j].hasBird() && !field[i][j].hasWall(direction) && !next.hasWallFrom(direction)) {
-                field[x][y] = factory.getBlock(true, field[x][y].getWalls());
-                field[i][j] = factory.getBlock(false, field[i][j].getWalls());
-            }
-            moveBlock(x, y, field, direction);
-            if (field[x][y].canBeMovedTo()) {
-                moveBlock(i, j, field, direction);
-            }
+
+        Index current = block.getIndex().plus(direction.getIndex());
+
+        while(isValid(current) && getElem(current, field) && !map.containsKey(current)) {
+            current = current.plus(direction.getIndex());
+        }
+
+        Index newIndex = current.min(direction.getIndex());
+        map.put(newIndex, new Block(newIndex, block));
+        if(flag) {
+            builder.addBird(newIndex);
         }
     }
 
-    private void swap(int i, int j, int x, int y, Block[][] field) {
-        Block temp = field[i][j];
-        field[i][j] = field[x][y];
-        field[x][y] = temp;
+    private void moveBird(Direction direction, Map<Index, Block> map, BoardBuilder builder) {
+        Index ind = bird.plus(direction.getIndex());
+        while (isValid(ind) && getElem(ind, field)
+                && (!map.containsKey(ind) || (!map.get(ind).hasWall(direction) && !map.get(ind).hasWallFrom(direction)))) {
+            ind = ind.plus(direction.getIndex());
+        }
+        if(map.containsKey(ind) && !map.get(ind).hasWallFrom(direction) && map.get(ind).hasWall(direction)) {
+            builder.addBird(ind);
+        } else {
+            builder.addBird(ind.min(direction.getIndex()));
+        }
+
     }
 
-    private Block[][] copyField() {
-        Block[][] copy = new Block[field.length][field[0].length];
-        for (int i = 0; i < field.length; i++) {
-            copy[i] = field[i].clone();
-        }
-        return copy;
+    public Index getBird() {
+        return bird;
+    }
+
+    private boolean isValid(Index i) {
+        return i.getFirst() >= 0 && i.getSecond() >= 0 && i.getFirst() < field.length && i.getSecond() < field[0].length;
+    }
+
+    private boolean getElem(Index index, boolean[][] field) {
+        return field[index.getFirst()][index.getSecond()];
+    }
+
+    public Set<Block> getBlocks() {
+        return new HashSet<>(blocks.values());
     }
 
     public boolean isFinished(int x, int y, Direction dir) {
-        Block b = field[x][y];
-        return b.hasBird() && !b.hasWall(dir);
+        Index ind = new Index(x,y);
+        if(!blocks.containsKey(ind)) {
+            return false;
+        } else if (blocks.get(ind).hasWall(dir) || !bird.equals(ind)) {
+            return false;
+        }
+        return true;
     }
 
     public void print() {
-        for (int i = 0; i < field.length; i++) {
-            System.out.println(Arrays.toString(field[i]));
-        }
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Board board = (Board) o;
-
-        return Arrays.deepEquals(field, board.field);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return field != null ? Arrays.deepHashCode(field) : 0;
+        System.out.println("bird: " + bird);
+        blocks.values().forEach(x -> System.out.println(x));
     }
 }
