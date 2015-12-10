@@ -17,7 +17,6 @@ public class Solver {
 
         while(!states.peek().isFinished(x,y,dir)) {
             for(GameState state : states.poll().getNextStates()) {
-                System.out.println(states.size());
                 Set<Block> c = state.getBoard().getBlocks();
                 c.add(new Block(state.getBoard().getBird(), dummy));
                 if(cache.contains(c)) {
