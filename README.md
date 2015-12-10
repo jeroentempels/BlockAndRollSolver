@@ -54,3 +54,11 @@ Finally we run the solver and print the moves. We pass the board created by the 
 ```java
 Solver.solve(builder.toBoard(), 2, 2, Direction.DOWN).forEach(System.out::println);
 ```
+
+output:
+
+```
+DOWN
+RIGHT
+DOWN
+```
