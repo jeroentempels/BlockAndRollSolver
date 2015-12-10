@@ -32,7 +32,7 @@ For a 3x3 grid, these are the coordinates of the field:
 
 (2,0) (2,1) (2,2)
 
-The next four booleans indicate the walls of the block. The order of wall is NORTH, EAST, SOUTH, WEST.
+The next four booleans indicate the walls of the block. The order of the walls is NORTH, EAST, SOUTH, WEST.
 
 ```java
 builder.addBlock(0, 0, true, true, false, true);
@@ -42,7 +42,7 @@ builder.addBlock(1, 2, false, true, false, true);
 We add the bird to the builder.
 
 ```java
-builder.addBird(0,0);
+builder.addBird(0, 0);
 ```
 
 Finally we run the solver and print the moves. We pass the board created by the builder and the coordinate and direction of the exit.
