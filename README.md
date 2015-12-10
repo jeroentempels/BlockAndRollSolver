@@ -14,5 +14,29 @@ boolean[][] field = {
 	{true, true, true},
 	{false, false, true}	
 };
+```
 
+Then we construct a board builder which we will use to create the game board. We pass the boolean array as a parameter.
+
+```java
+BoardBuilder builder = new BoardBuilder(field);
+```
+
+Then we add the blocks to the builder.
+
+```java
+builder.addBlock(0, 0, true, true, false, true);
+builder.addBlock(1, 2, false, true, false, true);
+```
+
+We add the bird to the builder.
+
+```java
+builder.addBird(0,0);
+```
+
+Finally we run the solver and print the moves.
+
+```java
+Solver.solve(builder.toBoard(), 2, 2, Direction.DOWN).forEach(System.out::println);
 ```
