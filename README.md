@@ -6,6 +6,10 @@ It can be downloaded at the following link: <https://play.google.com/store/apps/
 
 ## How to use
 
+As an example we will solve the given puzzle:
+
+![Image of level](https://github.com/jeroentempels/BlockAndRollSolver/blob/master/example.png)
+
 First create a boolean array. The elements are true if a block can move to or over the position, false otherwise.
 
 ```java
