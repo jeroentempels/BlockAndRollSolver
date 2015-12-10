@@ -24,12 +24,15 @@ public class Block {
      * Create a new block.
      *
      * @param index The index at which this block is located.
-     * @param up Boolean indicating whether this block has a wall on the north side.
+     * @param up    Boolean indicating whether this block has a wall on the north side.
      * @param right Boolean indicating whether this block has a wall on the east side.
-     * @param down Boolean indicating whether this block has a wall on the south side.
-     * @param left Boolean indicating whether this block has a wall on the west side.
+     * @param down  Boolean indicating whether this block has a wall on the south side.
+     * @param left  Boolean indicating whether this block has a wall on the west side.
      */
     public Block(Index index, boolean up, boolean right, boolean down, boolean left) {
+        if (index == null) {
+            throw new IllegalArgumentException("index can't be null.");
+        }
         this.index = index;
         this.up = up;
         this.right = right;
@@ -58,7 +61,6 @@ public class Block {
      * Check whether this block has a wall on the side of a given direction.
      *
      * @param dir The direction to check.
-     *
      * @return True is the block has a wall on the side of a given direction.
      */
     public boolean hasWall(Direction dir) {
@@ -78,12 +80,11 @@ public class Block {
 
     /**
      * Check whether this block has a wall on the opposite side of a given direction.
-     *
+     * <p>
      * UP <-> DOWN
      * LEFT <-> RIGHT
      *
      * @param dir The direction to check.
-     *
      * @return True is the block has a wall on the opposite side of a given direction.
      */
     public boolean hasWallFrom(Direction dir) {
