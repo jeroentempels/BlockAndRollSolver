@@ -40,7 +40,7 @@ public class Main {
         builder.addMovingBlock(3,1,false,false,true,true);
 
         builder.addBird(0, 2);
-        
+
         /*
             Solve the puzzle and print it.
 
