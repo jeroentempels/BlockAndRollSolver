@@ -1,7 +1,9 @@
 package solver;
 
 
-import game.*;
+import game.Board;
+import game.Direction;
+import game.Index;
 
 import java.util.*;
 

@@ -1,6 +1,8 @@
 package solver;
 
-import game.*;
+import game.Board;
+import game.Direction;
+import game.Index;
 
 import java.util.HashSet;
 import java.util.Set;
