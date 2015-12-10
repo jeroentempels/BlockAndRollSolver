@@ -23,6 +23,16 @@ BoardBuilder builder = new BoardBuilder(field);
 ```
 
 Then we add the blocks to the builder.
+The first two numbers are the coordinate of the block.
+For a 3x3 grid, these are the coordinates of the field:
+
+(0,0) (0,1) (0,2)
+
+(1,0) (1,1) (1,2)
+
+(2,0) (2,1) (2,2)
+
+The next four booleans indicate the walls of the block. The order of wall is NORTH, EAST, SOUTH, WEST.
 
 ```java
 builder.addBlock(0, 0, true, true, false, true);
@@ -35,7 +45,7 @@ We add the bird to the builder.
 builder.addBird(0,0);
 ```
 
-Finally we run the solver and print the moves.
+Finally we run the solver and print the moves. We pass the board created by the builder and the coordinate and direction of the exit.
 
 ```java
 Solver.solve(builder.toBoard(), 2, 2, Direction.DOWN).forEach(System.out::println);
