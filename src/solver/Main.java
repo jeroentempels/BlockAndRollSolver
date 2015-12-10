@@ -39,6 +39,7 @@ public class Main {
         builder.addMovingBlock(3,0,true, true,false,true);
         builder.addMovingBlock(3,1,false,false,true,true);
 
+        // Add the bird
         builder.addBird(0, 2);
 
         /*
@@ -53,7 +54,7 @@ public class Main {
             example: goal = block on 0,0 with bird and open wall on north side => 0,0,Direction.UP
          */
 
-        Solver.solve(builder.getBoard(), 4, 2, Direction.DOWN).forEach(System.out::println);
+        Solver.solve(builder.toBoard(), 4, 2, Direction.DOWN).forEach(System.out::println);
 
     }
 
