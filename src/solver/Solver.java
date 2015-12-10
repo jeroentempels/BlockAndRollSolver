@@ -13,7 +13,7 @@ public class Solver {
         states.add(new GameState(board));
         Set<Board> cache = new HashSet<>();
 
-        while(!states.peek().isFinished(x,y,dir)) {
+        while(!states.peek().isFinished(new Index(x,y),dir)) {
             for(GameState state : states.poll().getNextStates()) {
                 if(cache.contains(state.getBoard())) {
                     continue;

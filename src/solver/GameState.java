@@ -70,14 +70,13 @@ public class GameState {
     /**
      * Check whether this state is an end state.
      *
-     * @param row The goal row for the bird.
-     * @param column The goal column for the bird.
+     * @param index The index of the goal position for the bird.
      * @param dir The goal direction for the bird.
      *
      * @return True if this state is a end state. False otherwise.
      */
-    public boolean isFinished(int row, int column, Direction dir) {
-        return board.isFinished(row, column, dir);
+    public boolean isFinished(Index index, Direction dir) {
+        return board.isFinished(index, dir);
     }
 
     /**
