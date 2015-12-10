@@ -35,11 +35,11 @@ public class Main {
              bool3 : block has wall on south side.
              bool4 : block has wall on west side.
          */
-        builder.addMovingBlock(0, 2, true, false, true, true);
-        builder.addMovingBlock(1,1,true, true, true, false);
-        builder.addMovingBlock(2,0,true, false, true, false);
-        builder.addMovingBlock(3,0,true, true,false,true);
-        builder.addMovingBlock(3,1,false,false,true,true);
+        builder.addBlock(0, 2, true, false, true, true);
+        builder.addBlock(1, 1, true, true, true, false);
+        builder.addBlock(2, 0, true, false, true, false);
+        builder.addBlock(3, 0, true, true, false, true);
+        builder.addBlock(3, 1, false, false, true, true);
 
         // Add the bird
         builder.addBird(0, 2);

@@ -57,7 +57,7 @@ public class Board {
         Map<Index, Block> newBlocks = new HashMap<>();
         List<Block> tempBlocks = direction.sort(blocks.values());
         tempBlocks.forEach(block -> moveBlock(block, direction, newBlocks, builder));
-        newBlocks.forEach((k, v) -> builder.addMovingBlock(k, v));
+        newBlocks.forEach((k, v) -> builder.addBlock(k, v));
         return builder.toBoard();
     }
 

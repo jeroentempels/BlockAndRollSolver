@@ -37,9 +37,9 @@ public class BoardBuilder {
      * @param down  Boolean indicating whether this block has a wall on the south side.
      * @param left  Boolean indicating whether this block has a wall on the west side.
      */
-    public void addMovingBlock(int i, int j, boolean up, boolean right, boolean down, boolean left) {
+    public void addBlock(int i, int j, boolean up, boolean right, boolean down, boolean left) {
         Index ind = new Index(i, j);
-        addMovingBlock(ind, new Block(ind, up, right, down, left));
+        addBlock(ind, new Block(ind, up, right, down, left));
     }
 
     /**
@@ -48,7 +48,7 @@ public class BoardBuilder {
      * @param index The index at which the block is located.
      * @param block The block to add.
      */
-    public void addMovingBlock(Index index, Block block) {
+    public void addBlock(Index index, Block block) {
         if (!index.equals(block.getIndex())) {
             throw new IllegalArgumentException("The given index " + index + " was different from the index of the block " + block + ".");
         }
