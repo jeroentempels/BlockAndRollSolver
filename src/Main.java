@@ -1,5 +1,5 @@
-import Board.BoardBuilder;
-import Board.Direction;
+import game.BoardBuilder;
+import game.Direction;
 import solver.Solver;
 
 public class Main {

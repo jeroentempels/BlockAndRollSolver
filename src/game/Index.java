@@ -1,4 +1,4 @@
-package Board;
+package game;
 
 /**
  * Class representing an index of a 2d-array.

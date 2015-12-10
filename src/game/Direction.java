@@ -1,8 +1,5 @@
-package Board;
+package game;
 
-
-import Board.Block;
-import Board.Index;
 
 import java.util.*;
 import java.util.stream.Collectors;

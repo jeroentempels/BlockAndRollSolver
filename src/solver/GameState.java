@@ -1,6 +1,6 @@
 package solver;
 
-import Board.*;
+import game.*;
 
 import java.util.HashSet;
 import java.util.Set;

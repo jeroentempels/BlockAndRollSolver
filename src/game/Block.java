@@ -1,4 +1,4 @@
-package Board;
+package game;
 
 /**
  * Class representing a moving block on the field.

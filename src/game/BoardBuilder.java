@@ -1,4 +1,4 @@
-package Board;
+package game;
 
 import java.util.HashMap;
 
