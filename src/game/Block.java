@@ -3,7 +3,7 @@ package game;
 /**
  * Class representing a moving block on the field.
  */
-public class Block {
+class Block {
 
     // Index at which this block is located.
     private final Index index;
