@@ -1,5 +1,6 @@
 import game.BoardBuilder;
 import game.Direction;
+import solver.NoSolutionFoundException;
 import solver.Solver;
 
 public class Example {
@@ -24,7 +25,11 @@ public class Example {
 
         builder.addBird(0, 2);
 
-        Solver.solve(builder.toBoard(), 4, 2, Direction.DOWN).forEach(System.out::println);
+        try {
+            Solver.solve(builder.toBoard(), 4, 2, Direction.DOWN).forEach(System.out::println);
+        } catch (NoSolutionFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
