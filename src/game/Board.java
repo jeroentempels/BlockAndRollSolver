@@ -65,17 +65,6 @@ public class Board {
     }
 
     private void moveBlock(Block block, Direction direction, Map<Index, Block> map, BoardBuilder builder) {
-
-        boolean flag = false;
-        if (bird.equals(block.getIndex())) {
-            if (!block.hasWall(direction)) {
-                moveBird(direction, map, builder);
-            } else {
-                flag = true;
-            }
-        }
-
-
         Index current = block.getIndex().plus(direction.getIndex());
 
         while (isValid(current) && getElem(current, field) && !map.containsKey(current)) {
@@ -84,21 +73,20 @@ public class Board {
 
         Index newIndex = current.min(direction.getIndex());
         map.put(newIndex, new Block(newIndex, block));
-        if (flag) {
-            builder.addBird(newIndex);
+
+        if(bird.equals(block.getIndex())) {
+            builder.addBird(moveBird(newIndex, direction, map));
         }
     }
 
-    private void moveBird(Direction direction, Map<Index, Block> map, BoardBuilder builder) {
-        Index ind = bird.plus(direction.getIndex());
-        while (isValid(ind) && getElem(ind, field)
-                && (!map.containsKey(ind) || (!map.get(ind).hasWall(direction) && !map.get(ind).hasWallFrom(direction)))) {
-            ind = ind.plus(direction.getIndex());
+    private Index moveBird(Index index, Direction direction, Map<Index, Block> map) {
+        Index current = index;
+        while(!map.get(current).hasWall(direction)
+                && map.containsKey(current.plus(direction.getIndex()))
+                && !map.get(current.plus(direction.getIndex())).hasWallFrom(direction)) {
+            current = current.plus(direction.getIndex());
         }
-        if (map.containsKey(ind) && !map.get(ind).hasWallFrom(direction) && map.get(ind).hasWall(direction)) {
-            ind = ind.plus(direction.getIndex());
-        }
-        builder.addBird(ind.min(direction.getIndex()));
+        return current;
     }
 
     private boolean isValid(Index i) {
