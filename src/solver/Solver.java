@@ -19,6 +19,7 @@ public class Solver {
      * @param x     The row index of the goal position.
      * @param y     The column index of the goal position.
      * @param dir   The direction at which there is a exit at the goal position.
+     * @throws NoSolutionFoundException Thrown if there is no solution.
      * @return A list containing the moves in order to win.
      */
     public static List<Direction> solve(Board board, int x, int y, Direction dir) {
@@ -27,7 +28,7 @@ public class Solver {
         states.add(new GameState(board));
         Set<Board> cache = new HashSet<>();
 
-        while (!states.peek().isFinished(new Index(x, y), dir)) {
+        while (!states.isEmpty() && !states.peek().isFinished(new Index(x, y), dir)) {
             for (GameState state : states.poll().getNextStates()) {
                 if (cache.contains(state.getBoard())) {
                     continue;
@@ -35,6 +36,9 @@ public class Solver {
                 cache.add(state.getBoard());
                 states.add(state);
             }
+        }
+        if(states.isEmpty()) {
+            throw new NoSolutionFoundException("No solution was found.");
         }
         return getMoves(states.poll());
     }
