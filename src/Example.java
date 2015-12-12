@@ -16,12 +16,18 @@ public class Example {
         };
 
         BoardBuilder builder = new BoardBuilder(field);
-
+        /*
         builder.addBlock(0, 2, true, false, true, true);
         builder.addBlock(1, 1, true, true, true, false);
         builder.addBlock(2, 0, true, false, true, false);
         builder.addBlock(3, 0, true, true, false, true);
         builder.addBlock(3, 1, false, false, true, true);
+        */
+        builder.addBlock(0, 2, Direction.UP, Direction.DOWN, Direction.LEFT);
+        builder.addBlock(1, 1, Direction.UP, Direction.RIGHT, Direction.DOWN);
+        builder.addBlock(2, 0, Direction.UP, Direction.DOWN);
+        builder.addBlock(3, 0, Direction.UP, Direction.RIGHT, Direction.LEFT);
+        builder.addBlock(3, 1, Direction.DOWN, Direction.LEFT);
 
         builder.addBird(0, 2);
 

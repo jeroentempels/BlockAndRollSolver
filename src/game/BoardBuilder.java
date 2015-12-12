@@ -1,6 +1,6 @@
 package game;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Class that builds a board.
@@ -39,7 +39,12 @@ public class BoardBuilder {
      */
     public void addBlock(int i, int j, boolean up, boolean right, boolean down, boolean left) {
         Index ind = new Index(i, j);
-        addBlock(ind, new Block(ind, up, right, down, left));
+        Set<Direction> directions = new HashSet<>();
+        if(up) {directions.add(Direction.UP);}
+        if(down) {directions.add(Direction.DOWN);}
+        if(right) {directions.add(Direction.RIGHT);}
+        if(left) {directions.add(Direction.LEFT);}
+        addBlock(ind, new Block(ind, directions));
     }
 
     /**
@@ -53,6 +58,11 @@ public class BoardBuilder {
             throw new IllegalArgumentException("The given index " + index + " was different from the index of the block " + block + ".");
         }
         blocks.put(index, block);
+    }
+
+    public void addBlock(int i, int j, Direction... directions) {
+        Index ind = new Index(i,j);
+        addBlock(ind, new Block(ind, new HashSet<>(Arrays.asList(directions))));
     }
 
     /**

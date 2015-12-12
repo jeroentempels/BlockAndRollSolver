@@ -18,6 +18,11 @@ public enum Direction {
             Comparator<Block> comp = (Block b1, Block b2) -> Integer.compare(b1.getIndex().getFirst(), b2.getIndex().getFirst());
             return sort(blocks, comp);
         }
+
+        @Override
+        public Direction getOpposite() {
+            return Direction.DOWN;
+        }
     }, DOWN {
         @Override
         public Index getIndex() {
@@ -28,6 +33,11 @@ public enum Direction {
         public List<Block> sort(Collection<Block> blocks) {
             Comparator<Block> comp = (Block b1, Block b2) -> Integer.compare(-b1.getIndex().getFirst(), -b2.getIndex().getFirst());
             return sort(blocks, comp);
+        }
+
+        @Override
+        public Direction getOpposite() {
+            return Direction.UP;
         }
     }, LEFT {
         @Override
@@ -40,6 +50,11 @@ public enum Direction {
             Comparator<Block> comp = (Block b1, Block b2) -> Integer.compare(b1.getIndex().getSecond(), b2.getIndex().getSecond());
             return sort(blocks, comp);
         }
+
+        @Override
+        public Direction getOpposite() {
+            return Direction.RIGHT;
+        }
     }, RIGHT {
         @Override
         public Index getIndex() {
@@ -50,6 +65,11 @@ public enum Direction {
         public List<Block> sort(Collection<Block> blocks) {
             Comparator<Block> comp = (Block b1, Block b2) -> Integer.compare(-b1.getIndex().getSecond(), -b2.getIndex().getSecond());
             return sort(blocks, comp);
+        }
+
+        @Override
+        public Direction getOpposite() {
+            return Direction.LEFT;
         }
     };
 
@@ -77,4 +97,6 @@ public enum Direction {
     List<Block> sort(Collection<Block> blocks, Comparator<Block> blockComparator) {
         return blocks.stream().sorted(blockComparator).collect(Collectors.toList());
     }
+
+    public abstract Direction getOpposite();
 }

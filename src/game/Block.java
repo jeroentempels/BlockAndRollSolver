@@ -1,5 +1,8 @@
 package game;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Class representing a moving block on the field.
  */
@@ -8,36 +11,24 @@ class Block {
     // Index at which this block is located.
     private final Index index;
 
-    // boolean indicating whether this block has a wall on the north side.
-    private final boolean up;
-
-    // boolean indicating whether this block has a wall on the east side.
-    private final boolean right;
-
-    // boolean indicating whether this block has a wall on the south side.
-    private final boolean down;
-
-    // boolean indicating whether this block has a wall on the west side.
-    private final boolean left;
+    // An array containing all the directions of the walls of this block.
+    private final Set<Direction> directions;
 
     /**
      * Create a new block.
      *
      * @param index The index at which this block is located.
-     * @param up    Boolean indicating whether this block has a wall on the north side.
-     * @param right Boolean indicating whether this block has a wall on the east side.
-     * @param down  Boolean indicating whether this block has a wall on the south side.
-     * @param left  Boolean indicating whether this block has a wall on the west side.
+     * @param directions An array containing all the directions of the walls of this block.
      */
-    public Block(Index index, boolean up, boolean right, boolean down, boolean left) {
+    public Block(Index index, Set<Direction> directions) {
         if (index == null) {
             throw new IllegalArgumentException("index can't be null.");
         }
+        if( directions == null) {
+            throw new IllegalArgumentException("directions can't be null.");
+        }
         this.index = index;
-        this.up = up;
-        this.right = right;
-        this.down = down;
-        this.left = left;
+        this.directions = directions;
     }
 
     /**
@@ -47,7 +38,7 @@ class Block {
      * @param block The old block describing the walls of the new block.
      */
     public Block(Index index, Block block) {
-        this(index, block.up, block.right, block.down, block.left);
+        this(index, new HashSet<>(block.directions));
     }
 
     /**
@@ -64,18 +55,7 @@ class Block {
      * @return True is the block has a wall on the side of a given direction.
      */
     public boolean hasWall(Direction dir) {
-        switch (dir) {
-            case UP:
-                return up;
-            case DOWN:
-                return down;
-            case LEFT:
-                return left;
-            case RIGHT:
-                return right;
-            default:
-                throw new IllegalArgumentException();
-        }
+        return directions.contains(dir);
     }
 
     /**
@@ -88,18 +68,7 @@ class Block {
      * @return True is the block has a wall on the opposite side of a given direction.
      */
     public boolean hasWallFrom(Direction dir) {
-        switch (dir) {
-            case UP:
-                return down;
-            case DOWN:
-                return up;
-            case LEFT:
-                return right;
-            case RIGHT:
-                return left;
-            default:
-                throw new IllegalArgumentException();
-        }
+        return this.hasWall(dir.getOpposite());
     }
 
     @Override
@@ -109,21 +78,15 @@ class Block {
 
         Block block = (Block) o;
 
-        if (up != block.up) return false;
-        if (right != block.right) return false;
-        if (down != block.down) return false;
-        if (left != block.left) return false;
-        return index.equals(block.index);
+        if (!index.equals(block.index)) return false;
+        return directions.equals(block.directions);
 
     }
 
     @Override
     public int hashCode() {
         int result = index.hashCode();
-        result = 31 * result + (up ? 1 : 0);
-        result = 31 * result + (right ? 1 : 0);
-        result = 31 * result + (down ? 1 : 0);
-        result = 31 * result + (left ? 1 : 0);
+        result = 31 * result + directions.hashCode();
         return result;
     }
 }
